@@ -1,13 +1,9 @@
 Django PDB
 ==========
 
-Don't do that
--------------
-
 Adding `pdb.set_trace()` to your source files every time you want to break into pdb sucks.
-
-Do this
--------
+Don't do that.
+Do this.
 
 Install using pip:
 
