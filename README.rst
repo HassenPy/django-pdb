@@ -7,6 +7,9 @@ Don't do that.
 
 Do this.
 
+Installation
+------------
+
 Install using pip::
 
     pip install django-pdb
