@@ -1,14 +1,14 @@
 Django PDB
 ==========
 
-Making life a tiny bit easier
------------------------------
+Make debugging Django easier
+----------------------------
 
 Adding ``pdb.set_trace()`` to your source files every time you want to break into pdb sucks.
 
-Don't do that
+Don't do that.
 
-Do this
+Do this.
 
 Installation
 ------------
