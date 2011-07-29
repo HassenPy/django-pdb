@@ -36,6 +36,7 @@ setup(
     long_description=get_long_description(),
     author='Tom Christie',
     author_email='tom@tomchristie.com',
+    url='https://github.com/tomchristie/django-pdb',
     packages=('django_pdb',
               'django_pdb.management',
               'django_pdb.management.commands'),
