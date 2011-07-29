@@ -1,7 +1,10 @@
 Django PDB
 ==========
 
-**Adding ``pdb.set_trace()`` to your source files every time you want to break into pdb sucks.**
+Making life a tiny bit easier
+-----------------------------
+
+Adding ``pdb.set_trace()`` to your source files every time you want to break into pdb sucks.
 
 Don't do that
 
@@ -24,7 +27,9 @@ Add to your django project::
 Usage
 -----
 
-``manage.py runserver --pdb`` drops into pdb at the start of every view::
+``manage.py runserver --pdb``
+
+Drops into pdb at the start of every view::
 
     bash: testproject/manage.py runserver --pdb
     Validating models...
@@ -43,7 +48,9 @@ Usage
     -> a = 1
     (Pdb) 
 
-``manage.py test --pdb`` drops into pdb on test errors/failures::
+``manage.py test --pdb``
+
+Drops into pdb on test errors/failures::
 
     bash: testproject/manage.py test testapp --pdb
     Creating test database for alias 'default'...
