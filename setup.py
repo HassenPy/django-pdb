@@ -23,7 +23,10 @@ def get_long_description():
     """
     Return the contents of the README file.
     """
-    return open(abs_path('README.rst')).read()
+    try:
+        return open(abs_path('README.rst')).read()
+    except:
+        pass # Required to install using pip (won't have README.rst then)
 
 
 setup(
@@ -36,6 +39,7 @@ setup(
     packages=('django_pdb',
               'django_pdb.management',
               'django_pdb.management.commands'),
+    license='Public Domain',
     classifiers = [
         'Programming Language :: Python',
         'Development Status :: 3 - Alpha',
