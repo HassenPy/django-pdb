@@ -32,7 +32,7 @@ def get_long_description():
 setup(
     name='django-pdb',
     version=get_version('django_pdb'),
-    description="Gives you 'manage.py runserver --pdb' and 'manage.py test --pdb'",
+    description='Gives you `manage.py runserver --pdb` and `manage.py test --pdb`',
     long_description=get_long_description(),
     author='Tom Christie',
     author_email='tom@tomchristie.com',
