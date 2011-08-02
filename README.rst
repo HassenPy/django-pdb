@@ -29,7 +29,7 @@ Usage
 
 ``manage.py runserver``
 
-Drops into pdb at the start of a view if the URL includes a `pdb` GET parameter::
+Drops into pdb at the start of a view if the URL includes a `pdb` GET parameter.  `settings.DEBUG` must be `True`::
 
     bash: testproject/manage.py runserver
     Validating models...

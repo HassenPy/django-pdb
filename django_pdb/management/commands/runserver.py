@@ -13,13 +13,17 @@ class Command(RunServerCommand):
     )
 
     def handle(self, *args, **options):
-        # Add pdb middleware
+        # Add pdb middleware, if --pdb is specified, or if we're in DEBUG mode
         from django.conf import settings
-        settings.MIDDLEWARE_CLASSES += ('django_pdb.middleware.PdbMiddleware',)
+
+        pdb_option = options.pop('pdb')
+     
+        if pdb_option or settings.DEBUG:
+            settings.MIDDLEWARE_CLASSES += ('django_pdb.middleware.PdbMiddleware',)
         
         # If --pdb is specified then always break at the start of views.
         # Otherwise break only if a 'pdb' query parameter is set in the url.  
-        if options.pop('pdb'):
+        if pdb_option:
             PdbMiddleware.always_break = True
 
         super(Command, self).handle(*args, **options)
