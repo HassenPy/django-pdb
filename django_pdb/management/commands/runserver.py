@@ -1,4 +1,5 @@
 from django.core.management.commands.runserver import Command as RunServerCommand
+from django_pdb.middleware import PdbMiddleware
 from optparse import make_option
 
 class Command(RunServerCommand):
@@ -12,7 +13,13 @@ class Command(RunServerCommand):
     )
 
     def handle(self, *args, **options):
+        # Add pdb middleware
+        from django.conf import settings
+        settings.MIDDLEWARE_CLASSES += ('django_pdb.middleware.PdbMiddleware',)
+        
+        # If --pdb is specified then always break at the start of views.
+        # Otherwise break only if a 'pdb' query parameter is set in the url.  
         if options.pop('pdb'):
-            from django.conf import settings
-            settings.MIDDLEWARE_CLASSES += ('django_pdb.middleware.PdbMiddleware',)
+            PdbMiddleware.always_break = True
+
         super(Command, self).handle(*args, **options)

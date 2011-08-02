@@ -27,6 +27,27 @@ Add to your django project::
 Usage
 -----
 
+``manage.py runserver``
+
+Drops into pdb at the start of a view if the URL includes a `pdb` GET parameter::
+
+    bash: testproject/manage.py runserver
+    Validating models...
+    
+    0 errors found
+    Django version 1.3, using settings 'testproject.settings'
+    Development server is running at http://127.0.0.1:8000/
+    Quit the server with CONTROL-C.
+    
+    GET /test?pdb
+    function "myview" in testapp/views.py:6
+    args: ()
+    kwargs: {}
+    
+    > /Users/tom/github/django-pdb/testproject/testapp/views.py(7)myview()
+    -> a = 1
+    (Pdb)
+
 ``manage.py runserver --pdb``
 
 Drops into pdb at the start of every view::
@@ -39,14 +60,14 @@ Drops into pdb at the start of every view::
     Development server is running at http://127.0.0.1:8000/
     Quit the server with CONTROL-C.
     
-    GET /
+    GET /test
     function "myview" in testapp/views.py:6
     args: ()
     kwargs: {}
     
     > /Users/tom/github/django-pdb/testproject/testapp/views.py(7)myview()
     -> a = 1
-    (Pdb) 
+    (Pdb)
 
 ``manage.py test --pdb``
 
