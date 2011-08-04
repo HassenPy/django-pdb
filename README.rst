@@ -94,10 +94,9 @@ Drops into pdb on test errors/failures::
 Other apps that override runserver
 --------------------------------------
 
-If you also use other apps that override runserver, but still want to use `django_pdb`, 
-then there is a workaround.
+If you also use other apps that override runserver, but still want to use `django_pdb`...
 
-You can add the following to your settings.py:
+Add the following to your settings.py:
 
     if DEBUG:
         MIDDLEWARE_CLASSES += ('django_pdb.middleware.PdbMiddleware',)
