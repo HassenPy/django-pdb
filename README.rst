@@ -90,3 +90,17 @@ Drops into pdb on test errors/failures::
     > /Users/tom/github/django-pdb/testproject/testapp/tests.py(16)test_error()
     -> one_plus_one = four
     (Pdb) 
+
+Other apps that override runserver
+--------------------------------------
+
+If you also use other apps that override runserver, but still want to use `django_pdb`, 
+then there is a workaround.
+
+You can add the following to your settings.py:
+
+    if DEBUG:
+        MIDDLEWARE_CLASSES += ('django_pdb.middleware.PdbMiddleware',)
+
+Then, there is no need to have `django_pdb` in your INSTALLED_APPS, but you can still
+add `pdb` to the URL query string.
