@@ -2,7 +2,6 @@ import inspect
 import os
 import pdb
 import sys
-from django.core.exceptions import MiddlewareNotUsed
 from django_pdb.utils import get_ipdb, has_ipdb
 
 
@@ -39,7 +38,7 @@ class PdbMiddleware(object):
         type_pdb = self.get_type_pdb(request)
         if not type_pdb:
             return
- 
+
         filename = inspect.getsourcefile(view_func)
         basename = os.path.basename(filename)
         dirname = os.path.basename(os.path.dirname(filename))
@@ -50,7 +49,10 @@ class PdbMiddleware(object):
 
         print
         print '%s %s' % (request.method, request.get_full_path())
-        print 'function "%s" in %s/%s:%d' % (funcname, dirname, basename, lineno)
+        print 'function "%s" in %s/%s:%d' % (funcname,
+                                             dirname,
+                                             basename,
+                                             lineno)
         print 'args: %s' % (view_args,)
         print 'kwargs: %s' % (view_kwargs,)
         print

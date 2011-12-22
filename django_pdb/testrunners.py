@@ -1,6 +1,5 @@
 from django.test.simple import DjangoTestSuiteRunner
 import pdb
-import traceback
 
 try:
     # Django 1.3+
@@ -13,7 +12,7 @@ else:
     # Django 1.3+
     from django.utils.unittest import TextTestRunner as DjangoTestRunner
 
-from django_pdb.utils import has_ipdb, get_ipdb
+from django_pdb.utils import has_ipdb
 
 
 class ExceptionTestResultMixin(object):
@@ -94,7 +93,8 @@ class PdbTestSuiteRunner(DjangoTestSuiteRunner):
     Override the standard DjangoTestSuiteRunner to instead drop into pdb on test errors/failures.
     """
     def run_suite(self, suite, **kwargs):
-        return PdbTestRunner(verbosity=self.verbosity, failfast=self.failfast).run(suite)
+        return PdbTestRunner(verbosity=self.verbosity,
+                             failfast=self.failfast).run(suite)
 
 
 class IPdbTestResult(ExceptionTestResultMixin, unittest.TextTestResult):
@@ -116,6 +116,5 @@ class IPdbTestSuiteRunner(DjangoTestSuiteRunner):
     """
 
     def run_suite(self, suite, **kwargs):
-        return IPdbTestRunner(verbosity=self.verbosity, failfast=self.failfast).run(suite)
-
-    
+        return IPdbTestRunner(verbosity=self.verbosity,
+                              failfast=self.failfast).run(suite)
