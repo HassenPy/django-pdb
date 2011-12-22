@@ -60,7 +60,7 @@ class PdbMiddleware(object):
         if type_pdb == 'ipdb' and has_ipdb():
             p = get_ipdb()
         else:
-            if not HAS_IPDB:
+            if not type_pdb == 'pdb':
                 print 'You do not install ipdb or ipython module'
             p = pdb.Pdb()
         p.reset()

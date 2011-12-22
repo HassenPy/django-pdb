@@ -4,9 +4,11 @@ import pdb
 try:
     # Django 1.3+
     from django.utils import unittest
+    TextTestResult = unittest.TextTestResult
 except ImportError:
     # Django 1.2
     import unittest
+    TextTestResult = unittest._TextTestResult
     from django.test.simple import DjangoTestRunner
 else:
     # Django 1.3+
@@ -76,7 +78,7 @@ class ExceptionTestResultMixin(object):
         self.get_pdb().post_mortem(tb)
 
 
-class PdbTestResult(ExceptionTestResultMixin, unittest.TextTestResult):
+class PdbTestResult(ExceptionTestResultMixin, TextTestResult):
     pass
 
 
@@ -97,7 +99,7 @@ class PdbTestSuiteRunner(DjangoTestSuiteRunner):
                              failfast=self.failfast).run(suite)
 
 
-class IPdbTestResult(ExceptionTestResultMixin, unittest.TextTestResult):
+class IPdbTestResult(ExceptionTestResultMixin, TextTestResult):
 
     pdb_type = 'ipdb'
 
