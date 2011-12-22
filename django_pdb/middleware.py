@@ -2,7 +2,7 @@ import inspect
 import os
 import pdb
 import sys
-from django.core.exceptions import MiddlewareNotUsed
+from django_pdb.utils import get_ipdb, has_ipdb
 
 
 class PdbMiddleware(object):
@@ -17,18 +17,28 @@ class PdbMiddleware(object):
     """
 
     always_break = False
-  
+
+    def get_type_pdb(self, request):
+        type_pdb = None
+        if self.always_break:
+            type_pdb = self.always_break
+        elif request.GET.get('pdb', None) is not None:
+            type_pdb = 'pdb'
+        elif request.GET.get('ipdb', None) is not None:
+            type_pdb = 'ipdb'
+        return type_pdb
+
     def process_view(self, request, view_func, view_args, view_kwargs):
         """
         If running with '--pdb', set a breakpoint at the start
         of each of each view before it gets called.
         """
-        
         # Skip out unless using `runserver --pdb`,
         # or `pdb` is in the command line parameters
-        if not (self.always_break or 'pdb' in request.GET):
+        type_pdb = self.get_type_pdb(request)
+        if not type_pdb:
             return
- 
+
         filename = inspect.getsourcefile(view_func)
         basename = os.path.basename(filename)
         dirname = os.path.basename(os.path.dirname(filename))
@@ -39,12 +49,20 @@ class PdbMiddleware(object):
 
         print
         print '%s %s' % (request.method, request.get_full_path())
-        print 'function "%s" in %s/%s:%d' % (funcname, dirname, basename, lineno)
+        print 'function "%s" in %s/%s:%d' % (funcname,
+                                             dirname,
+                                             basename,
+                                             lineno)
         print 'args: %s' % (view_args,)
         print 'kwargs: %s' % (view_kwargs,)
         print
 
-        p = pdb.Pdb()
+        if type_pdb == 'ipdb' and has_ipdb():
+            p = get_ipdb()
+        else:
+            if not type_pdb == 'pdb':
+                print 'You do not install ipdb or ipython module'
+            p = pdb.Pdb()
         p.reset()
-        p.set_break(filename, lineno, temporary, cond, funcname)
+        p.set_break(filename, lineno + 1, temporary, cond, funcname)
         sys.settrace(p.trace_dispatch)
