@@ -64,5 +64,5 @@ class PdbMiddleware(object):
                 print 'You do not install ipdb or ipython module'
             p = pdb.Pdb()
         p.reset()
-        p.set_break(filename, lineno, temporary, cond, funcname)
+        p.set_break(filename, lineno + 1, temporary, cond, funcname)
         sys.settrace(p.trace_dispatch)
