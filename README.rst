@@ -30,6 +30,7 @@ Usage
 ``manage.py runserver``
 
 Drops into pdb at the start of a view if the URL includes a `pdb` GET parameter.
+
 Drops into ipdb at the start of a view if the URL includes a `ipdb` GET parameter.
 
 Only enabled if ``settings.DEBUG = True``::
@@ -62,7 +63,9 @@ Only enabled if ``settings.DEBUG = True``::
           9     b = 2
     ipdb>
 
-``manage.py runserver --pdb`` or ``manage.py runserver --ipdb``
+``manage.py runserver --pdb``
+
+``manage.py runserver --ipdb``
 
 Drops into pdb or ipdb at the start of every view::
 
@@ -103,7 +106,9 @@ Drops into pdb or ipdb at the start of every view::
     ipdb>
 
 
-``manage.py test --pdb`` or ``manage.py test --ipdb``
+``manage.py test --pdb``
+
+``manage.py test --ipdb``
 
 Drops into pdb or ipdb on test errors/failures::
 
