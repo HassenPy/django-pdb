@@ -1,5 +1,6 @@
 # Django settings for testproject project.
 
+
 def ABSOLUTE_PATH(relative_path):
     import os
     project_path = os.path.abspath(os.path.dirname(__file__))
@@ -19,7 +20,7 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+        'ENGINE': 'django.db.backends.sqlite3',  # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
         'NAME': ABSOLUTE_PATH('sqlite3.db'),    # Or path to database file if using sqlite3.
         'USER': '',                      # Not used with sqlite3.
         'PASSWORD': '',                  # Not used with sqlite3.

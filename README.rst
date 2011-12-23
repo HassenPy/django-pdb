@@ -4,7 +4,7 @@ Django PDB
 Make debugging Django easier
 ----------------------------
 
-Adding ``pdb.set_trace()`` to your source files every time you want to break into pdb sucks.
+Adding ``pdb.set_trace()`` or ``ipdb.set_trace()`` to your source files every time you want to break into pdb sucks.
 
 Don't do that.
 
@@ -42,17 +42,28 @@ Only enabled if ``settings.DEBUG = True``::
     Quit the server with CONTROL-C.
     
     GET /test?pdb
-    function "myview" in testapp/views.py:6
+    function "myview" in testapp/views.py:7
     args: ()
     kwargs: {}
     
-    > /Users/tom/github/django-pdb/testproject/testapp/views.py(7)myview()
+    > /Users/tom/github/django-pdb/testproject/testapp/views.py(8)myview()
     -> a = 1
     (Pdb)
 
+    GET /test?ipdb
+    function "myview" in testapp/views.py:7
+    args: ()
+    kwargs: {}
+    
+    > /Users/tom/github/django-pdb/testproject/testapp/views.py(8)myview()
+          7 def myview(request):
+    3---> 8     a = 1
+          9     b = 2
+    ipdb>
+
 ``manage.py runserver --pdb``
 
-Drops into pdb at the start of every view::
+Drops into pdb or ipdb at the start of every view::
 
     bash: testproject/manage.py runserver --pdb
     Validating models...
@@ -63,7 +74,7 @@ Drops into pdb at the start of every view::
     Quit the server with CONTROL-C.
     
     GET /test
-    function "myview" in testapp/views.py:6
+    function "myview" in testapp/views.py:7
     args: ()
     kwargs: {}
     
@@ -71,9 +82,29 @@ Drops into pdb at the start of every view::
     -> a = 1
     (Pdb)
 
-``manage.py test --pdb``
+    bash: testproject/manage.py runserver --ipdb
+    Validating models...
+    
+    0 errors found
+    Django version 1.3, using settings 'testproject.settings'
+    Development server is running at http://127.0.0.1:8000/
+    Quit the server with CONTROL-C.
+    
+    GET /test
+    function "myview" in testapp/views.py:7
+    args: ()
+    kwargs: {}
+    
+    > /Users/tom/github/django-pdb/testproject/testapp/views.py(8)myview()
+          7 def myview(request):
+    3---> 8     a = 1
+          9     b = 2
+    ipdb>
 
-Drops into pdb on test errors/failures::
+
+``manage.py test --pdb`` or ``manage.py test --ipdb``
+
+Drops into pdb or ipdb on test errors/failures::
 
     bash: testproject/manage.py test testapp --pdb
     Creating test database for alias 'default'...
@@ -90,6 +121,25 @@ Drops into pdb on test errors/failures::
     > /Users/tom/github/django-pdb/testproject/testapp/tests.py(16)test_error()
     -> one_plus_one = four
     (Pdb) 
+
+    bash: testproject/manage.py test testapp --pdb
+    Creating test database for alias 'default'...
+    E
+    ======================================================================
+    >>> test_error (testapp.tests.SimpleTest)
+    ----------------------------------------------------------------------
+    Traceback (most recent call last):
+      File "/Users/tom/github/django-pdb/testproject/testapp/tests.py", line 16, in test_error
+        one_plus_one = four
+    NameError: global name 'four' is not defined
+    ======================================================================
+    
+    > /Users/tom/github/django-pdb/testproject/testapp/tests.py(16)test_error()
+          15         c = 3
+     ---> 16         one_plus_one = four
+          17 
+     ipdb> 
+
 
 Other apps that override runserver
 --------------------------------------

@@ -1,17 +1,20 @@
 from django.test.simple import DjangoTestSuiteRunner
 import pdb
-import traceback
 
 try:
     # Django 1.3+
     from django.utils import unittest
+    TextTestResult = unittest.TextTestResult
 except ImportError:
     # Django 1.2
     import unittest
+    TextTestResult = unittest._TextTestResult
     from django.test.simple import DjangoTestRunner
 else:
     # Django 1.3+
     from django.utils.unittest import TextTestRunner as DjangoTestRunner
+
+from django_pdb.utils import has_ipdb
 
 
 class ExceptionTestResultMixin(object):
@@ -19,6 +22,14 @@ class ExceptionTestResultMixin(object):
     A mixin class that can be added to any test result class.
     Drops into pdb on test errors/failures.
     """
+    pdb_type = 'pdb'
+
+    def get_pdb(self):
+        if self.pdb_type == 'ipdb' and has_ipdb():
+            import ipdb
+            return ipdb
+        return pdb
+
     def addError(self, test, err):
         super(ExceptionTestResultMixin, self).addError(test, err)
         exctype, value, tb = err
@@ -35,7 +46,7 @@ class ExceptionTestResultMixin(object):
         #while tb and self._is_relevant_tb_level(tb):
         #    tb = tb.tb_next
 
-        pdb.post_mortem(tb)
+        self.get_pdb().post_mortem(tb)
 
     def addFailure(self, test, err):
         super(ExceptionTestResultMixin, self).addFailure(test, err)
@@ -64,10 +75,10 @@ class ExceptionTestResultMixin(object):
         #p.cmdloop()
 
         # It would be good if we could make sure we're in the correct frame here
-        pdb.post_mortem(tb)
+        self.get_pdb().post_mortem(tb)
 
 
-class PdbTestResult(ExceptionTestResultMixin, unittest._TextTestResult):
+class PdbTestResult(ExceptionTestResultMixin, TextTestResult):
     pass
 
 
@@ -84,4 +95,28 @@ class PdbTestSuiteRunner(DjangoTestSuiteRunner):
     Override the standard DjangoTestSuiteRunner to instead drop into pdb on test errors/failures.
     """
     def run_suite(self, suite, **kwargs):
-        return PdbTestRunner(verbosity=self.verbosity, failfast=self.failfast).run(suite)
+        return PdbTestRunner(verbosity=self.verbosity,
+                             failfast=self.failfast).run(suite)
+
+
+class IPdbTestResult(ExceptionTestResultMixin, TextTestResult):
+
+    pdb_type = 'ipdb'
+
+
+class IPdbTestRunner(DjangoTestRunner):
+    """
+    Override the standard DjangoTestRunner to instead drop into ipdb on test errors/failures.
+    """
+    def _makeResult(self):
+        return IPdbTestResult(self.stream, self.descriptions, self.verbosity)
+
+
+class IPdbTestSuiteRunner(DjangoTestSuiteRunner):
+    """
+    Override the standard DjangoTestSuiteRunner to instead drop into ipdb on test errors/failures.
+    """
+
+    def run_suite(self, suite, **kwargs):
+        return IPdbTestRunner(verbosity=self.verbosity,
+                              failfast=self.failfast).run(suite)
