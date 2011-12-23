@@ -52,6 +52,8 @@ Only enabled if ``settings.DEBUG = True``::
     -> a = 1
     (Pdb)
 
+.. code-block:: bash
+
     GET /test?ipdb
     function "myview" in testapp/views.py:7
     args: ()
@@ -63,9 +65,7 @@ Only enabled if ``settings.DEBUG = True``::
           9     b = 2
     ipdb>
 
-``manage.py runserver --pdb``
-
-``manage.py runserver --ipdb``
+``manage.py runserver --pdb`` *or* ``manage.py runserver --ipdb``
 
 Drops into pdb or ipdb at the start of every view::
 
@@ -85,6 +85,8 @@ Drops into pdb or ipdb at the start of every view::
     > /Users/tom/github/django-pdb/testproject/testapp/views.py(7)myview()
     -> a = 1
     (Pdb)
+
+.. code-block:: bash
 
     bash: testproject/manage.py runserver --ipdb
     Validating models...
@@ -106,9 +108,7 @@ Drops into pdb or ipdb at the start of every view::
     ipdb>
 
 
-``manage.py test --pdb``
-
-``manage.py test --ipdb``
+``manage.py test --pdb`` *or* ``manage.py test --ipdb``
 
 Drops into pdb or ipdb on test errors/failures::
 
@@ -128,7 +128,9 @@ Drops into pdb or ipdb on test errors/failures::
     -> one_plus_one = four
     (Pdb) 
 
-    bash: testproject/manage.py test testapp --pdb
+.. code-block:: bash
+
+    bash: testproject/manage.py test testapp --ipdb
     Creating test database for alias 'default'...
     E
     ======================================================================
@@ -152,10 +154,7 @@ Other apps that override runserver
 
 If you also use other apps that override runserver, but still want to use `django_pdb`...
 
-Add the following to your settings.py:
+Add the following to your settings.py::
 
     if DEBUG:
         MIDDLEWARE_CLASSES += ('django_pdb.middleware.PdbMiddleware',)
-
-Then, there is no need to have `django_pdb` in your INSTALLED_APPS, but you can still
-add `pdb` to the URL query string.
