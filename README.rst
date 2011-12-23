@@ -4,7 +4,7 @@ Django PDB
 Make debugging Django easier
 ----------------------------
 
-Adding ``pdb.set_trace()`` or ``ipdb.set_trace()`` to your source files every time you want to break into pdb sucks.
+Adding ``pdb.set_trace()`` to your source files every time you want to break into pdb sucks.
 
 Don't do that.
 
@@ -30,6 +30,7 @@ Usage
 ``manage.py runserver``
 
 Drops into pdb at the start of a view if the URL includes a `pdb` GET parameter.
+Drops into ipdb at the start of a view if the URL includes a `ipdb` GET parameter.
 
 Only enabled if ``settings.DEBUG = True``::
 
@@ -61,7 +62,7 @@ Only enabled if ``settings.DEBUG = True``::
           9     b = 2
     ipdb>
 
-``manage.py runserver --pdb``
+``manage.py runserver --pdb`` or ``manage.py runserver --ipdb``
 
 Drops into pdb or ipdb at the start of every view::
 
