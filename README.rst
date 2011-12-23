@@ -96,11 +96,13 @@ Drops into pdb/ipdb on test errors/failures::
 
 
 Other apps that override runserver
---------------------------------------
+----------------------------------
 
-If you also use other apps that override runserver, but still want to use `django_pdb`...
+If you also use other apps that override the runserver command, but still want to use `django-pdb`...
 
 Add the following to your settings.py::
 
     if DEBUG:
         MIDDLEWARE_CLASSES += ('django_pdb.middleware.PdbMiddleware',)
+
+And make sure that ``django_pdb`` comes before any conflicting apps in ``INSTALLED_APPS``.
