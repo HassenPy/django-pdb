@@ -33,7 +33,7 @@ Drops into pdb at the start of a view if the URL includes a `pdb` GET parameter.
 
 Drops into ipdb at the start of a view if the URL includes a `ipdb` GET parameter.
 
-Only enabled if ``settings.DEBUG = True``::
+This behavior is only enabled if ``settings.DEBUG = True``::
 
     bash: testproject/manage.py runserver
     Validating models...
@@ -52,7 +52,7 @@ Only enabled if ``settings.DEBUG = True``::
     -> a = 1
     (Pdb)
 
-.. code-block:: bash
+Using ``ipdb``::
 
     GET /test?ipdb
     function "myview" in testapp/views.py:7
@@ -65,9 +65,9 @@ Only enabled if ``settings.DEBUG = True``::
           9     b = 2
     ipdb>
 
-``manage.py runserver --pdb`` *or* ``manage.py runserver --ipdb``
+``manage.py runserver --pdb``::
 
-Drops into pdb or ipdb at the start of every view::
+Drops into pdb at the start of every view::
 
     bash: testproject/manage.py runserver --pdb
     Validating models...
@@ -86,7 +86,9 @@ Drops into pdb or ipdb at the start of every view::
     -> a = 1
     (Pdb)
 
-.. code-block:: bash
+ ``manage.py runserver --ipdb``::
+
+Drops into ipdb at the start of every view::
 
     bash: testproject/manage.py runserver --ipdb
     Validating models...
@@ -108,9 +110,9 @@ Drops into pdb or ipdb at the start of every view::
     ipdb>
 
 
-``manage.py test --pdb`` *or* ``manage.py test --ipdb``
+``manage.py test --pdb``
 
-Drops into pdb or ipdb on test errors/failures::
+Drops into pdb on test errors/failures::
 
     bash: testproject/manage.py test testapp --pdb
     Creating test database for alias 'default'...
@@ -128,7 +130,9 @@ Drops into pdb or ipdb on test errors/failures::
     -> one_plus_one = four
     (Pdb) 
 
-.. code-block:: bash
+``manage.py test --ipdb``
+
+Drops into ipdb on test errors/failures::
 
     bash: testproject/manage.py test testapp --ipdb
     Creating test database for alias 'default'...
