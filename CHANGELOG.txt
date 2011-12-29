@@ -1,2 +1,3 @@
+0.2.2 - Fix long_description in PyPI
 0.2.1 - Add empty models.py.
 0.2.0 - Add ipdb support.
