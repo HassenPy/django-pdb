@@ -37,38 +37,38 @@ This behavior is only enabled if ``settings.DEBUG = True``::
 
     bash: testproject/manage.py runserver
     Validating models...
-    
+
     0 errors found
     Django version 1.3, using settings 'testproject.settings'
     Development server is running at http://127.0.0.1:8000/
     Quit the server with CONTROL-C.
-    
+
     GET /test?pdb
     function "myview" in testapp/views.py:7
     args: ()
     kwargs: {}
-    
+
     > /Users/tom/github/django-pdb/testproject/testapp/views.py(8)myview()
     -> a = 1
     (Pdb)
 
-``manage.py runserver --pdb`` **or** ``manage.py runserver --ipdb``::
+``manage.py runserver --pdb`` **or** ``manage.py runserver --ipdb``
 
 Drops into pdb/ipdb at the start of every view::
 
     bash: testproject/manage.py runserver --pdb
     Validating models...
-    
+
     0 errors found
     Django version 1.3, using settings 'testproject.settings'
     Development server is running at http://127.0.0.1:8000/
     Quit the server with CONTROL-C.
-    
+
     GET /test
     function "myview" in testapp/views.py:7
     args: ()
     kwargs: {}
-    
+
     > /Users/tom/github/django-pdb/testproject/testapp/views.py(7)myview()
     -> a = 1
     (Pdb)
@@ -89,10 +89,10 @@ Drops into pdb/ipdb on test errors/failures::
         one_plus_one = four
     NameError: global name 'four' is not defined
     ======================================================================
-    
+
     > /Users/tom/github/django-pdb/testproject/testapp/tests.py(16)test_error()
     -> one_plus_one = four
-    (Pdb) 
+    (Pdb)
 
 
 Other apps that override runserver
