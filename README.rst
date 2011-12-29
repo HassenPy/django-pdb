@@ -17,12 +17,19 @@ Install using pip::
 
     pip install django-pdb
 
-Add to your django project::
+Add to your settings.py::
 
+    # Make sure to add django_pdb before any apps that override the 'runserver'
+    # or 'test' commands (Includes south and django.contrib.staticfiles)
     INSTALLED_APPS = (
         ...
         'django_pdb',
+        ...
     )
+
+    # After your MIDDLEWARE classes:
+    if DEBUG:
+        MIDDLEWARE_CLASSES += ('django_pdb.middleware.PdbMiddleware',)
 
 Usage
 -----
@@ -95,14 +102,19 @@ Drops into pdb/ipdb on test errors/failures::
     (Pdb)
 
 
-Other apps that override runserver
-----------------------------------
+Other apps that override ``test``/``runserver``
+-----------------------------------------------
 
-If you also use other apps that override the runserver command, but still want to use `django-pdb`...
+``manage.py test --pdb`` **does not yet work** if you also have other apps that
+override the ``test`` command.
 
-Add the following to your settings.py::
+``manage.py runserver --pdb`` **does not yet work** if you also have other apps
+that override the ``runserver`` command.
 
-    if DEBUG:
-        MIDDLEWARE_CLASSES += ('django_pdb.middleware.PdbMiddleware',)
+Adding ``?pdb`` to the URL **does work** even if you have other apps that
+override the ``runserver`` command.
 
-And make sure that ``django_pdb`` comes before any conflicting apps in ``INSTALLED_APPS``.
+Make sure to put ``django_pdb`` before any conflicting apps in
+``INSTALLED_APPS`` so that they have priority.
+
+Notable apps include ``django.contrib.staticfile`` and ``south``.

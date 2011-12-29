@@ -84,6 +84,9 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
 )
 
+if DEBUG:
+    MIDDLEWARE_CLASSES += ('django_pdb.middleware.PdbMiddleware',)
+
 ROOT_URLCONF = 'testproject.urls'
 
 TEMPLATE_DIRS = (

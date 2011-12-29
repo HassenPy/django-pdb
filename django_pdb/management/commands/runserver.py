@@ -22,8 +22,10 @@ class Command(RunServerCommand):
         pdb_option = options.pop('pdb')
         ipdb_option = options.pop('ipdb')
 
-        if pdb_option or settings.DEBUG:
-            settings.MIDDLEWARE_CLASSES += ('django_pdb.middleware.PdbMiddleware',)
+        middleware = 'django_pdb.middleware.PdbMiddleware'
+        if ((pdb_option or settings.DEBUG)
+            and middleware not in settings.MIDDLEWARE_CLASSES):
+            settings.MIDDLEWARE_CLASSES += (middleware,)
 
         # If --pdb is specified then always break at the start of views.
         # Otherwise break only if a 'pdb' query parameter is set in the url.
