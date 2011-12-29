@@ -27,9 +27,9 @@ def get_long_description():
     Return the contents of the README file.
     """
     try:
-        return open(abs_path('README.txt')).read()
+        return open(abs_path('README.rst')).read()
     except:
-        pass  # Required to install using pip (won't have README.txt then)
+        pass  # Required to install using pip (won't have README then)
 
 
 setup(
