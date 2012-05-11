@@ -101,6 +101,9 @@ Drops into pdb/ipdb on test errors/failures::
     -> one_plus_one = four
     (Pdb)
 
+``manage.py runserver --pm``
+
+Post mortem mode, drops into (i)pdb if an exception is raised in a view.
 
 Other apps that override ``test``/``runserver``
 -----------------------------------------------
