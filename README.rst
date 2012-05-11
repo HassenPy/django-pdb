@@ -101,6 +101,11 @@ Drops into pdb/ipdb on test errors/failures::
     -> one_plus_one = four
     (Pdb)
 
+You can also use the template filter ``pdb`` to explore a template viriable in (i)pdb this way::
+
+    {% load template_filters %}
+
+    {{ variable|pdb }}
 
 Other apps that override ``test``/``runserver``
 -----------------------------------------------
