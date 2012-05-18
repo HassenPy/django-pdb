@@ -103,7 +103,7 @@ Drops into pdb/ipdb on test errors/failures::
 
 You can also use the template filter ``pdb`` to explore a template viriable in (i)pdb this way::
 
-    {% load template_filters %}
+    {% load pdb_filters %}
 
     {{ variable|pdb }}
 
