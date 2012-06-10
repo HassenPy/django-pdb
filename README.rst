@@ -101,8 +101,9 @@ Drops into pdb/ipdb on test errors/failures::
     -> one_plus_one = four
     (Pdb)
 
+
 Post mortem mode
------
+----------------
 
 ``manage.py runserver --pm``
 
@@ -112,6 +113,32 @@ no other app overriding ``runserver`` command.
 ``POST_MORTEM = True``
 
 You can also add ```POST_MORTEM = True``` to your ```settings.py``` to enable this option even if other app overrides ```runserver```.
+
+Filter
+------
+
+You can also use the template filter ``pdb`` to explore a template viriable in (i)pdb this way::
+
+    {% load pdb_filters %}
+
+    {{ variable|pdb }}
+
+Example::
+
+    bash: testproject/manage.py runserver
+    Validating models...
+
+    0 errors found
+    Django version 1.4, using settings 'testproject.settings'
+    Development server is running at http://127.0.0.1:8000/
+    Quit the server with CONTROL-C.
+    > /Users/tom/github/django-pdb/django_pdb/templatetags/pdb_filters.py(14)pdb()
+    -> return element
+    (Pdb) element
+    "I'm the variable"
+    (Pdb) element = "another value"
+    (Pdb) c
+    [11/May/2012 11:22:53] "GET /filter/ HTTP/1.1" 200 37
 
 Other apps that override ``test``/``runserver``
 -----------------------------------------------
