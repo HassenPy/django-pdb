@@ -119,7 +119,7 @@ Filter
 
 You can also use the template filter ``pdb`` to explore a template viriable in (i)pdb this way::
 
-    {% load pdb_filters %}
+    {% load pdb %}
 
     {{ variable|pdb }}
 
