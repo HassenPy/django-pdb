@@ -27,9 +27,12 @@ Add to your settings.py::
         ...
     )
 
-    # After your MIDDLEWARE classes:
-    if DEBUG:
-        MIDDLEWARE_CLASSES += ('django_pdb.middleware.PdbMiddleware',)
+    # Make sure to add PdbMiddleware after all other middleware.
+    # PdbMiddleware only activates when settings.DEBUG is True.
+    MIDDLEWARE_CLASSES = (
+        ...
+        'django_pdb.middleware.PdbMiddleware',
+    )
 
 Usage
 -----
