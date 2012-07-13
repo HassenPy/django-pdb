@@ -119,8 +119,9 @@ You can also add ```POST_MORTEM = True``` to your ```settings.py``` to enable th
 Other apps that override ``test``/``runserver``
 -----------------------------------------------
 
-``manage.py test --pdb`` **does not yet work** if you also have other apps that
-override the ``test`` command.
+``manage.py test --pdb`` works if you also have other apps that
+override the ``test`` command, as long as they use Python's unittest
+framework.
 
 ``manage.py runserver --pdb`` works if you also have other apps that
 override the ``runserver`` command.
