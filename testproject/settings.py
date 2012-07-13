@@ -82,10 +82,8 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'django_pdb.middleware.PdbMiddleware',
 )
-
-if DEBUG:
-    MIDDLEWARE_CLASSES += ('django_pdb.middleware.PdbMiddleware',)
 
 ROOT_URLCONF = 'testproject.urls'
 
