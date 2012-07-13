@@ -19,8 +19,8 @@ Install using pip::
 
 Add to your settings.py::
 
-    # Make sure to add django_pdb before any apps that override the 'runserver'
-    # or 'test' commands (Includes south and django.contrib.staticfiles)
+    # Make sure to add django_pdb AFTER any apps that override the 'runserver'
+    # or 'test' commands (includes south and django.contrib.staticfiles)
     INSTALLED_APPS = (
         ...
         'django_pdb',
@@ -122,13 +122,13 @@ Other apps that override ``test``/``runserver``
 ``manage.py test --pdb`` **does not yet work** if you also have other apps that
 override the ``test`` command.
 
-``manage.py runserver --pdb`` **does not yet work** if you also have other apps
-that override the ``runserver`` command.
-
-Adding ``?pdb`` to the URL **does work** even if you have other apps that
+``manage.py runserver --pdb`` works if you also have other apps that
 override the ``runserver`` command.
 
-Make sure to put ``django_pdb`` before any conflicting apps in
+Adding ``?pdb`` or ``?ipdb`` to the URL also works even if you have
+other apps that override the ``runserver`` command.
+
+Make sure to put ``django_pdb`` **after** any conflicting apps in
 ``INSTALLED_APPS`` so that they have priority.
 
-Notable apps include ``django.contrib.staticfile`` and ``south``.
+Notable apps include ``django.contrib.staticfiles`` and ``south``.
