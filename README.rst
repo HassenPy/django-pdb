@@ -117,11 +117,12 @@ You can also add ```POST_MORTEM = True``` to your ```settings.py``` to enable th
 Filter
 ------
 
-You can also use the template filter ``pdb`` to explore a template viriable in (i)pdb this way::
+You can also use the template filter ``pdb`` or ``ipdb`` to explore a template viriable in (i)pdb this way::
 
     {% load pdb %}
 
     {{ variable|pdb }}
+    {{ variable|ipdb }}
 
 Example::
 

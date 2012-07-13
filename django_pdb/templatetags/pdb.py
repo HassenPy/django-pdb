@@ -4,8 +4,15 @@ from django_pdb.utils import has_ipdb
 
 register = template.Library()
 
-@register.filter 
+@register.filter
 def pdb(element):
+    from pdb import set_trace
+    set_trace()
+    return element
+
+
+@register.filter
+def ipdb(element):
     if has_ipdb():
         from ipdb import set_trace
     else:
