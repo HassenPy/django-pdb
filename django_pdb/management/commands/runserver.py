@@ -1,10 +1,15 @@
 import sys
 import pdb
-from django.core.management.commands.runserver import Command as RunServerCommand
+
+from django_pdb.management import load_parent_command
 from django_pdb.middleware import PdbMiddleware
+
 from optparse import make_option
 from django_pdb.utils import has_ipdb
 from django.views import debug
+
+
+RunServerCommand = load_parent_command('runserver')
 
 
 class Command(RunServerCommand):

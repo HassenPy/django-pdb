@@ -1,5 +1,6 @@
-from django.test.simple import DjangoTestSuiteRunner
 import pdb
+
+from django.test.utils import get_runner
 
 try:
     # Django 1.3+
@@ -90,15 +91,6 @@ class PdbTestRunner(DjangoTestRunner):
         return PdbTestResult(self.stream, self.descriptions, self.verbosity)
 
 
-class PdbTestSuiteRunner(DjangoTestSuiteRunner):
-    """
-    Override the standard DjangoTestSuiteRunner to instead drop into pdb on test errors/failures.
-    """
-    def run_suite(self, suite, **kwargs):
-        return PdbTestRunner(verbosity=self.verbosity,
-                             failfast=self.failfast).run(suite)
-
-
 class IPdbTestResult(ExceptionTestResultMixin, TextTestResult):
 
     pdb_type = 'ipdb'
@@ -112,11 +104,23 @@ class IPdbTestRunner(DjangoTestRunner):
         return IPdbTestResult(self.stream, self.descriptions, self.verbosity)
 
 
-class IPdbTestSuiteRunner(DjangoTestSuiteRunner):
-    """
-    Override the standard DjangoTestSuiteRunner to instead drop into ipdb on test errors/failures.
-    """
+def make_suite_runner(use_ipdb, suite_runner=None):
+    if use_ipdb:
+        runner = IPdbTestRunner
+    else:
+        runner = PdbTestRunner
 
-    def run_suite(self, suite, **kwargs):
-        return IPdbTestRunner(verbosity=self.verbosity,
-                              failfast=self.failfast).run(suite)
+    if suite_runner is None:
+        from django.conf import settings
+        suite_runner = get_runner(settings)
+
+    class PdbTestSuiteRunner(suite_runner):
+        """
+        Override the standard DjangoTestSuiteRunner to instead drop
+        into the debugger on test errors/failures.
+        """
+        def run_suite(self, suite, **kwargs):
+            return runner(verbosity=self.verbosity,
+                          failfast=self.failfast).run(suite)
+
+    return PdbTestSuiteRunner
