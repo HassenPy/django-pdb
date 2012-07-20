@@ -123,6 +123,7 @@ You can also use the template filter ``pdb`` or ``ipdb`` to explore a template v
 
     {{ variable|pdb }}
     {{ variable|ipdb }}
+    {{ variable|ipdb|a_filter_to_debug }}
 
 Example::
 
@@ -140,6 +141,8 @@ Example::
     (Pdb) element = "another value"
     (Pdb) c
     [11/May/2012 11:22:53] "GET /filter/ HTTP/1.1" 200 37
+
+This is useful to inspect a complex object that isn't behaving as expected or debug a filter.
 
 Other apps that override ``test``/``runserver``
 -----------------------------------------------
