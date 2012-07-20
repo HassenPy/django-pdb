@@ -6,8 +6,8 @@ register = template.Library()
 
 @register.filter
 def pdb(element):
-    from pdb import set_trace
-    set_trace()
+    from django_pdb.utils import get_pdb_set_trace
+    get_pdb_set_trace()()
     return element
 
 
@@ -16,6 +16,7 @@ def ipdb(element):
     if has_ipdb():
         from ipdb import set_trace
     else:
-        from pdb import set_trace
+        from django_pdb.utils import get_pdb_set_trace
+        get_pdb_set_trace()()
     set_trace()
     return element

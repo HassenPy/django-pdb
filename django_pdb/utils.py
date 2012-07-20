@@ -17,6 +17,12 @@ def get_ipdb():
         return ipdb.Pdb(def_colors)
 
 
+def get_pdb_set_trace():
+    # for the templatetags because the file is named 'pdb' and that cause an importation conflict
+    from pdb import set_trace
+    return set_trace
+
+
 def get_def_colors():
     # Inspirated in https://github.com/gotcha/ipdb/blob/master/ipdb/__main__.py
     def_colors = 'Linux'
