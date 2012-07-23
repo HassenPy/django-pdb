@@ -42,7 +42,8 @@ setup(
     url='https://github.com/tomchristie/django-pdb',
     packages=('django_pdb',
               'django_pdb.management',
-              'django_pdb.management.commands'),
+              'django_pdb.management.commands',
+              'django_pdb.templatetags'),
     license='Public Domain',
     classifiers=[
         'Programming Language :: Python',
