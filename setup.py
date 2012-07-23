@@ -35,6 +35,7 @@ def get_long_description():
 setup(
     name='django-pdb',
     version=get_version('django_pdb'),
+    description='Easier pdb debugging for Django',
     long_description=get_long_description(),
     author='Tom Christie',
     author_email='tom@tomchristie.com',

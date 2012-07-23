@@ -123,13 +123,5 @@ Other apps that override ``test``/``runserver``
 override the ``test`` command, as long as they use Python's unittest
 framework.
 
-``manage.py runserver --pdb`` works if you also have other apps that
-override the ``runserver`` command.
-
-Adding ``?pdb`` or ``?ipdb`` to the URL also works even if you have
-other apps that override the ``runserver`` command.
-
 Make sure to put ``django_pdb`` **after** any conflicting apps in
 ``INSTALLED_APPS`` so that they have priority.
-
-Notable apps include ``django.contrib.staticfiles`` and ``south``.
