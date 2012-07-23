@@ -1,5 +1,5 @@
 from django.conf import settings
-__version__ = '0.3.1'
+__version__ = '0.3.2'
 
 POST_MORTEM = getattr(settings, 'POST_MORTEM', False)
 DEBUG = getattr(settings, 'DEBUG', False)
