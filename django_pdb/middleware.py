@@ -52,6 +52,9 @@ class PdbMiddleware(object):
         if not type_pdb:
             return
 
+        if hasattr(view_func, "__class__"):
+            # Do not blow up on instance-based views
+            view_func = view_func.__class__
         filename = inspect.getsourcefile(view_func)
         basename = os.path.basename(filename)
         dirname = os.path.basename(os.path.dirname(filename))
