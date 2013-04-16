@@ -60,21 +60,19 @@ class PdbMiddleware(object):
         cond = None
         funcname = view_func.__name__
 
-        print
-        print '%s %s' % (request.method, request.get_full_path())
-        print 'function "%s" in %s/%s:%d' % (funcname,
-                                             dirname,
-                                             basename,
-                                             lineno)
-        print 'args: %s' % (view_args,)
-        print 'kwargs: %s' % (view_kwargs,)
-        print
+        print()
+        print('{} {}'.format(request.method, request.get_full_path()))
+        print('function "{}" in {}/{}:{}'.format(funcname,
+            dirname, basename, lineno))
+        print('args: {}'.format(view_args))
+        print('kwargs: {}'.format(view_kwargs))
+        print()
 
         if type_pdb == 'ipdb' and has_ipdb():
             p = get_ipdb()
         else:
             if not type_pdb == 'pdb':
-                print 'You do not install ipdb or ipython module'
+                print('You do not install ipdb or ipython module')
             p = pdb.Pdb()
         p.reset()
         p.set_break(filename, lineno + 1, temporary, cond, funcname)
