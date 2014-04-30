@@ -1,3 +1,4 @@
+0.4.0 - Py3k support
 0.2.3 - Update README with better info re. conflicting apps.
 0.2.2 - Fix long_description in PyPI.
 0.2.1 - Add empty models.py.
