@@ -36,7 +36,10 @@ def get_def_colors():
             ipshell = InteractiveShellEmbed()
             def_colors = ipshell.colors
         else:
-            def_colors = get_ipython.im_self.colors
+            try:
+                def_colors = get_ipython.im_self.colors
+            except AttributeError:
+                def_colors = get_ipython.__self__.colors
     else:
         from IPython.Debugger import Pdb
         from IPython.Shell import IPShell
