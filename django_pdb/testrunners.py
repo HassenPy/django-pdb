@@ -2,19 +2,7 @@ import pdb
 
 from django.test.utils import get_runner
 
-try:
-    # Django 1.3+
-    from django.utils import unittest
-    TextTestResult = unittest.TextTestResult
-except ImportError:
-    # Django 1.2
-    import unittest
-    TextTestResult = unittest._TextTestResult
-    from django.test.simple import DjangoTestRunner
-else:
-    # Django 1.3+
-    from django.utils.unittest import TextTestRunner as DjangoTestRunner
-
+from django.utils import unittest
 from django_pdb.utils import has_ipdb
 
 
@@ -79,11 +67,11 @@ class ExceptionTestResultMixin(object):
         self.get_pdb().post_mortem(tb)
 
 
-class PdbTestResult(ExceptionTestResultMixin, TextTestResult):
+class PdbTestResult(ExceptionTestResultMixin, unittest.TextTestResult):
     pass
 
 
-class PdbTestRunner(DjangoTestRunner):
+class PdbTestRunner(unittest.TextTestRunner):
     """
     Override the standard DjangoTestRunner to instead drop into pdb on test errors/failures.
     """
@@ -91,12 +79,12 @@ class PdbTestRunner(DjangoTestRunner):
         return PdbTestResult(self.stream, self.descriptions, self.verbosity)
 
 
-class IPdbTestResult(ExceptionTestResultMixin, TextTestResult):
+class IPdbTestResult(ExceptionTestResultMixin, unittest.TextTestResult):
 
     pdb_type = 'ipdb'
 
 
-class IPdbTestRunner(DjangoTestRunner):
+class IPdbTestRunner(unittest.TextTestRunner):
     """
     Override the standard DjangoTestRunner to instead drop into ipdb on test errors/failures.
     """
