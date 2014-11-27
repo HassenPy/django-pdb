@@ -3,7 +3,6 @@ import sys
 
 from django.core.management.commands import test
 
-#from django_pdb.compat import patch_test_command
 from django_pdb.management import load_parent_command
 from django_pdb.testrunners import make_suite_runner
 
