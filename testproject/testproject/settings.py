@@ -12,6 +12,8 @@ DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 TESTING = False
 
+TEST_RUNNER = 'django.test.simple.DjangoTestSuiteRunner'
+
 ADMINS = (
     # ('Your Name', 'your_email@domain.com'),
 )

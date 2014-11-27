@@ -16,7 +16,6 @@ def get_parent_commands():
     This function returns only callback applications above this
     application in the INSTALLED_APPS stack.
     """
-
     global _parent_commands
     if _parent_commands is None:
         django_path = management.__path__
