@@ -17,3 +17,5 @@ if DEBUG and POST_MORTEM == True:
         print('Exception occured: {}, {}'.format(exc_type, exc_value), file=sys.stderr)
         p.post_mortem(tb)
     debug.technical_500_response = runpdb
+
+default_app_config = 'django_pdb.apps.DjangoPdbConfig'
