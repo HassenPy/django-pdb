@@ -40,4 +40,3 @@ else:
         for app_config in reversed(app_configs):
             path = os.path.join(app_config.path, 'management')
             commands.update({name: app_config.name for name in find_commands(path)})
-
