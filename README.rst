@@ -19,12 +19,17 @@ Install using pip::
 
     pip install django-pdb
 
-Add to your settings.py
+Add it to your settings.py.
+
+For Django before 1.7 it needs to be added AFTER any apps that override the
+`runserver` or `test` commands (includes south and django.contrib.staticfiles).
+
+For Django after 1.7 it needs to be added BEFORE them.
 
 .. code:: python
 
-    # Make sure to add django_pdb AFTER any apps that override the 'runserver'
-    # or 'test' commands (includes south and django.contrib.staticfiles)
+    # Order is important and depends on your Django version.
+    # With Django 1.7+ put it towards the beginning, otherwise towards the end.
     INSTALLED_APPS = (
         ...
         'django_pdb',
