@@ -1,4 +1,5 @@
 # Django settings for testproject project.
+from django import VERSION
 
 
 def ABSOLUTE_PATH(relative_path):
@@ -12,7 +13,11 @@ DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 TESTING = False
 
-TEST_RUNNER = 'django.test.simple.DjangoTestSuiteRunner'
+
+if VERSION >= (1, 8):
+    TEST_RUNNER = 'django.test.runner.DiscoverRunner'
+else:
+    TEST_RUNNER = 'django.test.simple.DjangoTestSuiteRunner'
 
 ADMINS = (
     # ('Your Name', 'your_email@domain.com'),

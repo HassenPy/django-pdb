@@ -1,6 +1,7 @@
 from optparse import make_option
 import sys
 
+from django import VERSION as DJANGO_VERSION
 from django.core.management.commands import test
 
 from django_pdb.management import load_parent_command
@@ -19,12 +20,29 @@ def patch_test_command(Command):
     ipdb or pdb, allowing subclasses to inherit from it and wrap its
     behaviour.
     """
-    Command.option_list += type(Command.option_list)([
-        make_option('--pdb', action='store_true', dest='pdb', default=False,
-                    help='Drop into pdb shell on test errors or failures.'),
-        make_option('--ipdb', action='store_true', dest='ipdb', default=False,
-                    help='Drop into ipdb shell on test errors or failures.'),
-    ])
+    extra_options = [
+        ('--pdb',
+         dict(action='store_true', dest='pdb', default=False,
+              help='Drop into pdb shell on test errors or failures.')),
+        ('--ipdb',
+         dict(action='store_true', dest='ipdb', default=False,
+              help='Drop into ipdb shell on test errors or failures.')),
+    ]
+
+    if DJANGO_VERSION >= (1, 8):
+        # option_list is depecated since django 1.8 because optparse
+        # is replaced by argsparse. Override add_arguements() to add
+        # the extra pdb and ipdb options
+        def add_arguments(self, parser):
+            self._add_arguments(parser)
+            for name, kwargs in extra_options:
+                parser.add_argument(name, **kwargs)
+        Command._add_arguments = Command.add_arguments
+        Command.add_arguments = add_arguments
+    else:
+        Command.option_list += type(Command.option_list)([
+            make_option(name, **kwargs) for name, kwargs in extra_options
+        ])
 
     def handle(self, *test_labels, **options):
         """
