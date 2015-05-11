@@ -1,6 +1,8 @@
 import sys
 import pdb
 
+from django import VERSION as DJANGO_VERSION
+
 from django_pdb.management import load_parent_command
 from django_pdb.middleware import PdbMiddleware
 
@@ -11,20 +13,37 @@ from django.views import debug
 
 RunServerCommand = load_parent_command('runserver')
 
+extra_options = (
+    ('--pdb',
+     dict(action='store_true', dest='pdb', default=False,
+          help='Drop into pdb shell on at the start of any view.')),
+    ('--ipdb',
+     dict(action='store_true', dest='ipdb', default=False,
+          help='Drop into ipdb shell on at the start of any view.')),
+    ('--pm',
+     dict(action='store_true', dest='pm', default=False,
+          help='Drop into ipdb shell if an exception is raised in a view.')),
+)
+
 
 class Command(RunServerCommand):
     """
     Identical to Django's standard 'runserver' management command,
     except that it also adds support for a '--pdb' option.
     """
-    option_list = RunServerCommand.option_list + (
-        make_option('--pdb', action='store_true', dest='pdb', default=False,
-            help='Drop into pdb shell on at the start of any view.'),
-        make_option('--ipdb', action='store_true', dest='ipdb', default=False,
-            help='Drop into ipdb shell on at the start of any view.'),
-        make_option('--pm', action='store_true', dest='pm', default=False,
-            help='Drop into ipdb shell if an exception is raised in a view.'),
-    )
+
+    if DJANGO_VERSION >= (1, 8):
+        # option_list is depecated since django 1.8 because optparse
+        # is replaced by argsparse. Override add_arguements() to add
+        # the extra pdb and ipdb options
+        def add_arguments(self, parser):
+            super(Command, self).add_arguments(parser)
+            for name, kwargs in extra_options:
+                parser.add_argument(name, **kwargs)
+    else:
+        option_list = RunServerCommand.option_list + tuple(
+            make_option(name, **kwargs) for name, kwargs in extra_options
+        )
 
     def handle(self, *args, **options):
         # Add pdb middleware, if --pdb is specified, or if we're in DEBUG mode
