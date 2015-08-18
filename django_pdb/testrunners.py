@@ -2,7 +2,7 @@ import pdb
 
 from django.test.utils import get_runner
 
-from django.utils import unittest
+import unittest
 from django_pdb.utils import has_ipdb
 
 
