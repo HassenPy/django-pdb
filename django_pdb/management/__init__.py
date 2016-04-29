@@ -1,6 +1,11 @@
 from django.core import management
 from django.core.management import find_commands
-from django.utils.importlib import import_module
+try:
+    # Django > 1.7
+    from django.utils.module_loading import import_module
+except ImportError:
+    # Django < 1.7
+    from django.utils.importlib import import_module
 
 from ..compat import load_management_modules
 
