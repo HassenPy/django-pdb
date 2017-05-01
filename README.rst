@@ -1,4 +1,4 @@
-**Status**: I no longer actively use this project, and am only accepting bugfixes and django compatibility pull requests.
+**Status**: No longer maintained. Happy to consider ownership transfer of the repository & pypi package.
 
 Django PDB
 ==========
