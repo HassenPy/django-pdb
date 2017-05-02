@@ -52,10 +52,19 @@ class PdbMiddleware(object):
         if not type_pdb:
             return
 
-        filename = inspect.getsourcefile(view_func)
+        try:
+            filename = inspect.getsourcefile(view_func)
+        except TypeError:
+            if hasattr(view_func, "__class__"):
+                filename = inspect.getsourcefile(view_func.__class__)
+                lines, lineno = inspect.getsourcelines(view_func.__class__)
+            else:
+                raise
+        else:
+            lines, lineno = inspect.getsourcelines(view_func)
+
         basename = os.path.basename(filename)
         dirname = os.path.basename(os.path.dirname(filename))
-        lines, lineno = inspect.getsourcelines(view_func)
         temporary = True
         cond = None
         funcname = view_func.__name__
