@@ -9,7 +9,15 @@ from django.core.exceptions import MiddlewareNotUsed
 from django_pdb.utils import get_ipdb, has_ipdb
 
 
-class PdbMiddleware(object):
+try:
+    # MiddlewareMixin offers compatibility with both MIDDLEWARE and the old MIDDLEWARE_CLASSES.
+    from django.utils.deprecation import MiddlewareMixin
+    parent = MiddlewareMixin
+except ImportError:
+    parent = object
+
+
+class PdbMiddleware(parent):
     """
     Middleware to break into pdb at the start of views.
 
@@ -22,12 +30,13 @@ class PdbMiddleware(object):
 
     always_break = False
 
-    def __init__(self, debug_only=True):
+    def __init__(self, get_response=None, debug_only=True):
         """
         If debug_only is True, this middleware removes itself
         unless settings.DEBUG is also True. Otherwise, this middleware
         is always active.
         """
+        self.get_response = get_response
         if debug_only and not settings.DEBUG:
             raise MiddlewareNotUsed()
 
@@ -63,7 +72,7 @@ class PdbMiddleware(object):
         print()
         print('{} {}'.format(request.method, request.get_full_path()))
         print('function "{}" in {}/{}:{}'.format(funcname,
-            dirname, basename, lineno))
+              dirname, basename, lineno))
         print('args: {}'.format(view_args))
         print('kwargs: {}'.format(view_kwargs))
         print()
