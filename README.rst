@@ -1,5 +1,3 @@
-**Status**: No longer maintained. Happy to consider ownership transfer of the repository & pypi package.
-
 Django PDB
 ==========
 
