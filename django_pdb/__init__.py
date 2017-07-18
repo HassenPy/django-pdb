@@ -1,6 +1,6 @@
 from __future__ import print_function
 from django.conf import settings
-__version__ = '0.6.0'
+__version__ = '0.6.1'
 
 POST_MORTEM = getattr(settings, 'POST_MORTEM', False)
 DEBUG = getattr(settings, 'DEBUG', False)

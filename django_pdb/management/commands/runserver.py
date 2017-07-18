@@ -1,3 +1,5 @@
+from __future__ import print_function
+
 import sys
 import pdb
 
@@ -77,7 +79,9 @@ class Command(RunServerCommand):
         else:
             p = pdb
         if self.pm:
-            print >>sys.stderr, "Exception occured: %s, %s" % (exc_type, exc_value)
+            print(
+                "Exception occured: %s, %s" % (exc_type, exc_value),
+                file=sys.stderr)
             p.post_mortem(tb)
         else:
             raise
