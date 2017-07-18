@@ -1,5 +1,3 @@
-**Status**: I no longer actively use this project, and am only accepting bugfixes and django compatibility pull requests.
-
 Django PDB
 ==========
 
