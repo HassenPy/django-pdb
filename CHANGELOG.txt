@@ -1,3 +1,4 @@
+0.6.0 - Version 0.6 (Django 1.10 support)
 0.4.0 - Py3k support
 0.2.3 - Update README with better info re. conflicting apps.
 0.2.2 - Fix long_description in PyPI.
