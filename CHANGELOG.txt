@@ -1,3 +1,4 @@
+0.6.2 - Compat for middleware check
 0.6.1 - Python 3 compatibility fix
 0.6.0 - Version 0.6 (Django 1.10 support)
 0.4.0 - Py3k support
