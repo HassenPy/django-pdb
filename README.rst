@@ -36,7 +36,7 @@ For Django after 1.7 it needs to be added BEFORE them.
 
     # Make sure to add PdbMiddleware after all other middleware.
     # PdbMiddleware only activates when settings.DEBUG is True.
-    MIDDLEWARE_CLASSES = (
+    MIDDLEWARE = (
         ...
         'django_pdb.middleware.PdbMiddleware',
     )
