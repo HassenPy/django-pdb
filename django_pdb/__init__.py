@@ -7,7 +7,7 @@ DEBUG = getattr(settings, 'DEBUG', False)
 
 if DEBUG and POST_MORTEM == True:
     from django.views import debug
-    def runpdb(request, exc_type, exc_value, tb):
+    def runpdb(request, exc_type, exc_value, tb, status_code=500):
         import sys
         try:
             import ipdb
