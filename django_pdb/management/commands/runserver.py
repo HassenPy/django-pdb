@@ -55,9 +55,9 @@ class Command(RunServerCommand):
         ipdb_option = options.pop('ipdb')
 
         pdb_middleware = 'django_pdb.middleware.PdbMiddleware'
-        middleware = (settings.MIDDLEWARE
-                      if hasattr(settings, 'MIDDLEWARE')
-                      else settings.MIDDLEWARE_CLASSES)
+        middleware = getattr(settings, 'MIDDLEWARE', None)
+        if middleware is None:
+            middleware = settings.MIDDLEWARE_CLASSES
         if ((pdb_option or settings.DEBUG)
             and pdb_middleware not in middleware):
             middleware += (pdb_middleware,)
