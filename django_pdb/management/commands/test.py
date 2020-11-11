@@ -17,7 +17,7 @@ Command = load_parent_command('test')
 def patch_test_command(Command):
     """
     Monkeypatches Django's TestCommand so that it chooses to use
-    ipdb or pdb, allowing subclasses to inherit from it and wrap its
+    pudb, ipdb or pdb, allowing subclasses to inherit from it and wrap its
     behaviour.
     """
     extra_options = [
@@ -27,6 +27,9 @@ def patch_test_command(Command):
         ('--ipdb',
          dict(action='store_true', dest='ipdb', default=False,
               help='Drop into ipdb shell on test errors or failures.')),
+        ('--pudb',
+         dict(action='store_true', dest='pudb', default=False,
+              help='Drop into pudb shell on test errors or failures.')),
     ]
 
     if DJANGO_VERSION >= (1, 8):
@@ -51,13 +54,14 @@ def patch_test_command(Command):
         """
         pdb = options.pop('pdb')
         ipdb = options.pop('ipdb')
+        pudb = options.pop('pudb')
 
-        if pdb or ipdb:
+        if pdb or ipdb or pudb:
             options['verbosity'] = int(options.get('verbosity', 1))
             options['interactive'] = options.get('interactive', True)
             options['failfast'] = options.get('failfast', False)
 
-            TestRunner = self.get_runner(use_ipdb=ipdb)
+            TestRunner = self.get_runner(use_ipdb=ipdb, use_pudb=pudb)
             test_runner = TestRunner(**options)
             failures = test_runner.run_tests(test_labels)
 
@@ -70,8 +74,8 @@ def patch_test_command(Command):
     Command._handle = Command.handle
     Command.handle = handle
 
-    def get_runner(self, use_ipdb, suite_runner=None):
-        return make_suite_runner(use_ipdb=use_ipdb, suite_runner=suite_runner)
+    def get_runner(self, use_ipdb=False, use_pudb=False, suite_runner=None):
+        return make_suite_runner(use_ipdb=use_ipdb, use_pudb=use_pudb, suite_runner=suite_runner)
 
     Command.get_runner = get_runner
 

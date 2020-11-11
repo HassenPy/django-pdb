@@ -9,7 +9,7 @@ from django_pdb.management import load_parent_command
 from django_pdb.middleware import PdbMiddleware
 
 from optparse import make_option
-from django_pdb.utils import has_ipdb
+from django_pdb.utils import has_ipdb, has_pudb
 from django.views import debug
 
 
@@ -22,6 +22,9 @@ extra_options = (
     ('--ipdb',
      dict(action='store_true', dest='ipdb', default=False,
           help='Drop into ipdb shell on at the start of any view.')),
+    ('--pudb',
+     dict(action='store_true', dest='pudb', default=False,
+          help='Drop into pudb shell on at the start of any view.')),
     ('--pm',
      dict(action='store_true', dest='pm', default=False,
           help='Drop into ipdb shell if an exception is raised in a view.')),
@@ -53,6 +56,7 @@ class Command(RunServerCommand):
 
         pdb_option = options.pop('pdb')
         ipdb_option = options.pop('ipdb')
+        pudb_option = options.pop('pudb')
 
         pdb_middleware = 'django_pdb.middleware.PdbMiddleware'
         middleware = (settings.MIDDLEWARE
@@ -72,11 +76,16 @@ class Command(RunServerCommand):
             PdbMiddleware.always_break = 'pdb'
         elif ipdb_option:
             PdbMiddleware.always_break = 'ipdb'
+        elif pudb_option:
+            PdbMiddleware.always_break = 'pudb'
 
         super(Command, self).handle(*args, **options)
 
     def reraise(self, request, exc_type, exc_value, tb):
-        if has_ipdb():
+        if has_pudb():
+            import pudb
+            p = pudb
+        elif has_ipdb():
             import ipdb
             p = ipdb
         else:
