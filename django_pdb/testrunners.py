@@ -3,7 +3,7 @@ import pdb
 from django.test.utils import get_runner
 
 import unittest
-from django_pdb.utils import has_ipdb
+from django_pdb.utils import has_ipdb, has_pudb
 
 
 class ExceptionTestResultMixin(object):
@@ -14,6 +14,9 @@ class ExceptionTestResultMixin(object):
     pdb_type = 'pdb'
 
     def get_pdb(self):
+        if self.pdb_type == 'pudb' and has_pudb():
+            import pudb
+            return pudb
         if self.pdb_type == 'ipdb' and has_ipdb():
             import ipdb
             return ipdb
@@ -91,9 +94,23 @@ class IPdbTestRunner(unittest.TextTestRunner):
     def _makeResult(self):
         return IPdbTestResult(self.stream, self.descriptions, self.verbosity)
 
+class PudbTestResult(ExceptionTestResultMixin, unittest.TextTestResult):
 
-def make_suite_runner(use_ipdb, suite_runner=None):
-    if use_ipdb:
+    pdb_type = 'pudb'
+
+
+class PudbTestRunner(unittest.TextTestRunner):
+    """
+    Override the standard DjangoTestRunner to instead drop into pudb on test errors/failures.
+    """
+    def _makeResult(self):
+        return PudbTestResult(self.stream, self.descriptions, self.verbosity)
+
+
+def make_suite_runner(use_ipdb=False, use_pudb=False, suite_runner=None):
+    if use_pudb:
+        runner = PudbTestRunner
+    elif use_ipdb:
         runner = IPdbTestRunner
     else:
         runner = PdbTestRunner

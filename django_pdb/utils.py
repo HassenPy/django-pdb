@@ -6,6 +6,17 @@ def has_ipdb():
     except ImportError:
         return False
 
+def has_pudb():
+    try:
+        import pudb
+        return True
+    except ImportError:
+        return False
+
+
+def get_pudb():
+    from pudb.debugger import Debugger
+    return Debugger()
 
 def get_ipdb():
     def_colors = get_def_colors()

@@ -50,6 +50,8 @@ Drops into pdb at the start of a view if the URL includes a `pdb` GET parameter.
 
 Drops into ipdb at the start of a view if the URL includes a `ipdb` GET parameter.
 
+Drops into pudb at the start of a view if the URL includes a `pudb` GET parameter.
+
 This behavior is only enabled if ``settings.DEBUG = True``::
 
     bash: testproject/manage.py runserver
@@ -69,9 +71,9 @@ This behavior is only enabled if ``settings.DEBUG = True``::
     -> a = 1
     (Pdb)
 
-``manage.py runserver --pdb`` **or** ``manage.py runserver --ipdb``
+``manage.py runserver --pdb`` **or** ``manage.py runserver --ipdb`` **or** ``manage.py runserver --pudb``
 
-Drops into pdb/ipdb at the start of every view::
+Drops into pdb/ipdb/pudb at the start of every view::
 
     bash: testproject/manage.py runserver --pdb
     Validating models...
@@ -91,9 +93,9 @@ Drops into pdb/ipdb at the start of every view::
     (Pdb)
 
 
-``manage.py test --pdb`` **or** ``manage.py test --ipdb``
+``manage.py test --pdb`` **or** ``manage.py test --ipdb`` **or** ``manage.py test --pudb``
 
-Drops into pdb/ipdb on test errors/failures::
+Drops into pdb/ipdb/pudb on test errors/failures::
 
     bash: testproject/manage.py test testapp --pdb
     Creating test database for alias 'default'...
@@ -127,11 +129,12 @@ You can also add ```POST_MORTEM = True``` to your ```settings.py``` to enable th
 Filter
 ------
 
-You can also use the template filter ``pdb`` or ``ipdb`` to explore a template variable in (i)pdb this way::
+You can also use the template filter ``pdb``, ``ipdb`` or ``pudb`` to explore a template variable in (i)pdb this way::
 
     {% load pdb %}
 
     {{ variable|pdb }}
+    {{ variable|pudb }}
     {{ variable|ipdb }}
     {{ variable|ipdb|a_filter_to_debug }}
 
