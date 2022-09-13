@@ -38,7 +38,10 @@ class PdbMiddleware(parent):
         unless settings.DEBUG is also True. Otherwise, this middleware
         is always active.
         """
-        self.get_response = get_response
+        if parent is object:  # compatibility
+            self.get_response = get_response
+        else:
+            super().__init__(get_response)
         if debug_only and not settings.DEBUG:
             raise MiddlewareNotUsed()
 
